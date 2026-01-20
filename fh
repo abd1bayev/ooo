@@ -1,0 +1,40 @@
+import customtkinter as ctk
+import math
+
+class HilpiraydiganBayroq(ctk.CTk):
+    ''' 
+    Vazifasi: OOP va Matematik sinus funksiyasi orqali 
+    hilpirash effektini yaratish. 
+    '''
+    def __init__(self):
+        super().__init__()
+        self.geometry("400x200")
+        self.title("OOP Hilpirash")
+        self.canvas = ctk.CTkCanvas(self, width=400, height=120, highlightthickness=0)
+        self.canvas.pack(pady=40)
+        self.burchak = 0
+        self.animatsiya()
+
+    def animatsiya(self):
+        ''' 
+        Polimorfizm va Abstraksiya: Har bir kadrni qayta chizish 
+        orqali harakat illyuziyasini yaratamiz. 
+        '''
+        self.canvas.delete("all") # Avvalgi kadrni o'chirish
+        ranglar = ["#0099B5", "white", "#1EB53A"]
+        
+        for i in range(0, 400, 5): # Bayroqni 5 pikselli ustunlarga bo'lamiz
+            # Sinus yordamida tebranish balandligini hisoblaymiz
+            y_offset = math.sin((i / 50) + self.burchak) * 10
+            
+            for j, rang in enumerate(ranglar):
+                y_boshi = j * 40 + y_offset
+                # Har bir rangli bo'lakni chizamiz
+                self.canvas.create_rectangle(i, y_boshi, i+5, y_boshi+40, fill=rang, outline="")
+        
+        self.burchak += 0.2 # Tebranish tezligi
+        self.after(30, self.animatsiya) # 30 millisekunddan keyin qayta chaqirish
+
+if __name__ == "__main__":
+    app = HilpiraydiganBayroq()
+    app.mainloop()
